@@ -1,5 +1,6 @@
 package com.ediposouza.ecalendar;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -103,8 +104,8 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         private void onLoginClick() {
-            String userName = etUser.getText().toString();
-            String pass = etPass.getText().toString();
+            String userName = etUser.getText().toString().trim();
+            String pass = etPass.getText().toString().trim();
             int spUserHash = sharedPrefs.getInt(userName, 0);
             int userHash = userName.concat(pass).hashCode();
             if(spUserHash != userHash){
@@ -112,9 +113,11 @@ public class LoginActivity extends ActionBarActivity {
                 Toast.makeText(getActivity(), getString(R.string.login_error_user_pass), Toast.LENGTH_SHORT).show();
                 return;
             }
-            sharedPrefs.edit().putString(SP_LAST_USER, userName).commit();
+            sharedPrefs.edit().putString(SP_LAST_USER, userName).apply();
             //start home
-            Toast.makeText(getActivity(), "Login OK", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getActivity(), HomeActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         }
     }
 
@@ -161,16 +164,20 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         private void onRegisterClick() {
-            String pass = etPass.getText().toString();
+            String pass = etPass.getText().toString().trim();
             if(!pass.equals(etPassConfirm.getText().toString())) {
                 etPass.setError(getString(R.string.login_error_pass_match));
                 etPassConfirm.setError(getString(R.string.login_error_pass_match));
                 etPass.requestFocus();
                 return;
             }
-            String userKey = etUser.getText().toString();
+            String userKey = etUser.getText().toString().trim();
             int userHash = userKey.concat(pass).hashCode();
-            sharedPrefs.edit().putInt(userKey, userHash).commit();
+            if(sharedPrefs.edit().putInt(userKey, userHash).commit()) {
+                swapFragments();
+                Toast.makeText(getActivity(), getString(R.string.login_reg_success), Toast.LENGTH_SHORT).show();
+            }else
+                Toast.makeText(getActivity(), getString(R.string.login_error_writing), Toast.LENGTH_SHORT).show();
         }
     }
 
