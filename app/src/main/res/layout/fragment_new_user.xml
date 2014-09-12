@@ -31,7 +31,7 @@
         <EditText
             android:id="@+id/etUser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -55,25 +55,44 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_confirm_pass"
+            android:minEms="5"/>
+
+        <EditText
+            android:id="@+id/etPassConfirm"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/default_margin">
 
         <Button
-            android:id="@+id/btNewUser"
+            android:id="@+id/btRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"
-            android:text="New User"
+            android:text="Register"
             android:layout_marginRight="@dimen/default_margin"/>
 
         <Button
-            android:id="@+id/btLogin"
+            android:id="@+id/btCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"
-            android:text="Login"/>
+            android:text="Cancel"/>
 
     </LinearLayout>
 
