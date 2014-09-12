@@ -5,13 +5,14 @@
     <string name="action_settings">Settings</string>
     <string name="login_user">User: </string>
     <string name="login_pass">Password: </string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">ECalendar Login</string>
     <string name="hello_world">Hello world!</string>
     <string name="login_confirm_pass">Confirm Pass:</string>
     <string name="login_error_pass_match">Passwords don\'t match!</string>
     <string name="login_error_user_pass">User and Password error.</string>
     <string name="login_reg_success">Registration Success!</string>
     <string name="login_error_writing">Error while writting new user.</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">ECalendar</string>
+    <string name="item_appointment_with">with:</string>
 
 </resources>
