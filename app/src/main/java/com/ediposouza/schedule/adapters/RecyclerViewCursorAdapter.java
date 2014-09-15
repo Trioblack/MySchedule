@@ -1,4 +1,4 @@
-package com.ediposouza.ecalendar.adapters;
+package com.ediposouza.schedule.adapters;
 
 /**
  * Created by ufc134.souza on 15/09/2014.

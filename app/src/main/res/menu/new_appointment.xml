@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.ediposouza.schedule.HomeActivity" >
+    tools:context="com.ediposouza.schedule.NewAppointmentActivity" >
 
-    <item android:id="@+id/action_add"
-        android:title="@string/action_add_appointment"
-        android:icon="@android:drawable/ic_menu_add"
+    <item android:id="@+id/action_save"
+        android:title="@string/action_save_appointment"
         android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_save"
         app:showAsAction="always"
         tools:showAsAction="always" />
 

@@ -1,4 +1,4 @@
-package com.ediposouza.ecalendar.db;
+package com.ediposouza.schedule.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

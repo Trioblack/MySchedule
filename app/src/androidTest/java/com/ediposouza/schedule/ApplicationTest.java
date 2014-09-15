@@ -1,4 +1,4 @@
-package com.ediposouza.ecalendar;
+package com.ediposouza.schedule;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

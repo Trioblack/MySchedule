@@ -1,5 +1,6 @@
-package com.ediposouza.ecalendar;
+package com.ediposouza.schedule;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,9 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ediposouza.ecalendar.adapters.AppointmentCursorAdapter;
-import com.ediposouza.ecalendar.db.AppointmentContract;
-import com.ediposouza.ecalendar.db.AppointmentDbHelper;
+import com.ediposouza.schedule.adapters.AppointmentCursorAdapter;
+import com.ediposouza.schedule.db.AppointmentContract;
+import com.ediposouza.schedule.db.AppointmentDbHelper;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -49,7 +50,9 @@ public class HomeActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(this, NewAppointmentActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -89,6 +92,11 @@ public class HomeActivity extends ActionBarActivity {
             rvAppointment.setItemAnimator(new DefaultItemAnimator());
             // Initializes the loader
             getLoaderManager().initLoader(0, null, this);
+        }
+
+        @Override
+        public void onResume() {
+            getLoaderManager().restartLoader(0, null, this);
         }
 
         @Override

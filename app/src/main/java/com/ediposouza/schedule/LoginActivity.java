@@ -1,4 +1,4 @@
-package com.ediposouza.ecalendar;
+package com.ediposouza.schedule;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

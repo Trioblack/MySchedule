@@ -1,4 +1,4 @@
-package com.ediposouza.ecalendar.models;
+package com.ediposouza.schedule.models;
 
 import android.net.Uri;
 

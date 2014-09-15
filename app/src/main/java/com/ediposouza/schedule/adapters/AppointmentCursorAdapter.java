@@ -1,16 +1,18 @@
-package com.ediposouza.ecalendar.adapters;
+package com.ediposouza.schedule.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.ediposouza.ecalendar.R;
-import com.ediposouza.ecalendar.db.AppointmentContract;
-import com.ediposouza.ecalendar.models.Appointment;
-import com.ediposouza.ecalendar.models.AppointmentViewHolder;
+import com.ediposouza.schedule.R;
+import com.ediposouza.schedule.db.AppointmentContract;
+import com.ediposouza.schedule.models.Appointment;
+import com.ediposouza.schedule.models.AppointmentViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -35,18 +37,28 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
 
     @Override
     public void bindView(AppointmentViewHolder viewHolder, Context context, Cursor cursor) {
-            Appointment appointment = new Appointment(
-                    getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TITLE),
-                    getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DESC),
-                    parseDate(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DATE)),
-                    parseTime(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TIME)),
-                    Uri.parse(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI))
-            );
+        Appointment appointment = new Appointment(
+                getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TITLE),
+                getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DESC),
+                parseDate(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DATE)),
+                parseTime(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TIME)),
+                Uri.parse(getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI))
+        );
         viewHolder.tvTitle.setText(appointment.getTitle());
         viewHolder.tvDesc.setText(appointment.getDesc());
         viewHolder.tvDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(appointment.getDate()));
         viewHolder.tvTime.setText(new SimpleDateFormat("hh:mm").format(appointment.getTime()));
-        viewHolder.qcbContact.assignContactUri(appointment.getContactUri());
+        Cursor c = context.getContentResolver().query(
+                appointment.getContactUri(),
+                new String[] {ContactsContract.Contacts.PHOTO_THUMBNAIL_URI},
+                null,
+                null,
+                null);
+        if(c != null) {
+            c.moveToFirst();
+            Uri contactPhotoUri = Uri.parse(c.getString(0));
+            Picasso.with(context).load(contactPhotoUri).into(viewHolder.ivContact);
+        }
     }
 
     private String getCursorString(Cursor cursor, String columnName){
