@@ -1,13 +1,22 @@
 package com.ediposouza.ecalendar;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ediposouza.ecalendar.adapters.AppointmentAdapter;
+import com.ediposouza.ecalendar.models.Appointment;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -46,6 +55,10 @@ public class HomeActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private RecyclerView rvAppointment;
+        private ArrayList<Appointment> appointments;
+        private AppointmentAdapter appointmentAdapter;
+
         public PlaceholderFragment() {
         }
 
@@ -55,5 +68,16 @@ public class HomeActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             return rootView;
         }
+
+        @Override
+        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+            rvAppointment = (RecyclerView) view.findViewById(R.id.rvAppointment);
+            appointments = new ArrayList<Appointment>();
+            appointmentAdapter = new AppointmentAdapter(getActivity(), appointments);
+            rvAppointment.setAdapter(appointmentAdapter);
+            rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
+            rvAppointment.setItemAnimator(new DefaultItemAnimator());
+        }
+
     }
 }

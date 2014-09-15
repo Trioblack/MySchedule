@@ -2,35 +2,30 @@ package com.ediposouza.ecalendar.models;
 
 import android.net.Uri;
 
-import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 /**
  * Created by ufc134.souza on 12/09/2014.
  */
-public class Appointment implements Serializable{
+public class Appointment {
 
-    private Date date;
-    private Time time;
     private String title;
     private String desc;
+    private Date date;
+    private Time time;
     private Uri contactUri;
 
-    public Date getDate() {
-        return date;
+    public Appointment(){
+
     }
 
-    public void setDate(Date date) {
+    public Appointment(String title, String desc, Date date, Time time, Uri contactUri) {
+        this.title = title;
+        this.desc = desc;
         this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
         this.time = time;
+        this.contactUri = contactUri;
     }
 
     public String getTitle() {
@@ -47,6 +42,22 @@ public class Appointment implements Serializable{
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     public Uri getContactUri() {

@@ -10,12 +10,13 @@ import com.ediposouza.ecalendar.R;
 import com.ediposouza.ecalendar.models.Appointment;
 import com.ediposouza.ecalendar.models.AppointmentViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * Created by ufc134.souza on 12/09/2014.
  */
-public class AppointmentAdapter extends RecyclerView.Adapter {
+public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentViewHolder> {
 
     private Context context;
     private ArrayList<Appointment> appointments;
@@ -26,7 +27,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
+    public AppointmentViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_appointment, viewGroup, false);
         AppointmentViewHolder viewHolder = new AppointmentViewHolder(context, v);
@@ -34,10 +35,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(AppointmentViewHolder viewHolder, int position) {
         Appointment appointment = appointments.get(position);
-        AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
-        appointmentViewHolder.fillWith(appointment);
+        viewHolder.tvTitle.setText(appointment.getTitle());
+        viewHolder.tvDesc.setText(appointment.getDesc());
+        viewHolder.tvDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(appointment.getDate()));
+        viewHolder.tvTime.setText(new SimpleDateFormat("hh:mm").format(appointment.getTime()));
+        viewHolder.qcbContact.assignContactUri(appointment.getContactUri());
     }
 
     @Override

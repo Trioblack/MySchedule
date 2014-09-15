@@ -10,19 +10,17 @@ import android.widget.Toast;
 
 import com.ediposouza.ecalendar.R;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Created by ufc134.souza on 12/09/2014.
  */
 public class AppointmentViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
     private Context context;
-    private TextView tvTitle;
-    private TextView tvDesc;
-    private TextView tvDate;
-    private TextView tvTime;
-    private QuickContactBadge qcbContact;
+    public TextView tvTitle;
+    public TextView tvDesc;
+    public TextView tvDate;
+    public TextView tvTime;
+    public QuickContactBadge qcbContact;
 
     public AppointmentViewHolder(Context context, View itemView) {
         super(itemView);
@@ -40,14 +38,6 @@ public class AppointmentViewHolder extends RecyclerView.ViewHolder implements Vi
     public boolean onLongClick(View v) {
         Toast.makeText(context, "Long click " + tvTitle.getText().toString(), Toast.LENGTH_SHORT).show();
         return true;
-    }
-
-    public void fillWith(Appointment appointment){
-        tvTitle.setText(appointment.getTitle());
-        tvDesc.setText(appointment.getDesc());
-        tvDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(appointment.getDate()));
-        tvTime.setText(new SimpleDateFormat("hh:mm").format(appointment.getTime()));
-        qcbContact.assignContactUri(appointment.getContactUri());
     }
 
 }
