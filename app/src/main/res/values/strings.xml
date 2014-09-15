@@ -12,7 +12,7 @@
     <string name="login_error_user_pass">User and Password error.</string>
     <string name="login_reg_success">Registration Success!</string>
     <string name="login_error_writing">Error while writting new user.</string>
-    <string name="title_activity_home">ECalendar</string>
+    <string name="title_activity_home">Meus Compromissos</string>
     <string name="item_appointment_with">with:</string>
 
 </resources>

@@ -14,12 +14,12 @@ public class AppointmentDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + AppointmentContract.AppointmentEntry.TABLE_NAME + " (" +
-            AppointmentContract.AppointmentEntry._ID + " INTEGER PRIMARY KEY," +
-            AppointmentContract.AppointmentEntry.COLUMN_TITLE + "TEXT, " +
-            AppointmentContract.AppointmentEntry.COLUMN_DESC + "TEXT, " +
-            AppointmentContract.AppointmentEntry.COLUMN_DATE + "TEXT, " +
-            AppointmentContract.AppointmentEntry.COLUMN_TIME + "TEXT, " +
-            AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI + "TEXT )" +
+            AppointmentContract.AppointmentEntry._ID + " INTEGER PRIMARY KEY, " +
+            AppointmentContract.AppointmentEntry.COLUMN_TITLE + " TEXT, " +
+            AppointmentContract.AppointmentEntry.COLUMN_DESC + " TEXT, " +
+            AppointmentContract.AppointmentEntry.COLUMN_DATE + " TEXT, " +
+            AppointmentContract.AppointmentEntry.COLUMN_TIME + " TEXT, " +
+            AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI + " TEXT" +
             " )";
 
     private static final String SQL_DELETE_ENTRIES =

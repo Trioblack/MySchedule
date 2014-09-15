@@ -1,8 +1,13 @@
 package com.ediposouza.ecalendar;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.ediposouza.ecalendar.adapters.AppointmentAdapter;
-import com.ediposouza.ecalendar.models.Appointment;
-
-import java.util.ArrayList;
+import com.ediposouza.ecalendar.adapters.AppointmentCursorAdapter;
+import com.ediposouza.ecalendar.db.AppointmentContract;
+import com.ediposouza.ecalendar.db.AppointmentDbHelper;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -53,11 +58,12 @@ public class HomeActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
+        private TextView tvUserName;
         private RecyclerView rvAppointment;
-        private ArrayList<Appointment> appointments;
-        private AppointmentAdapter appointmentAdapter;
+
+        private AppointmentCursorAdapter appointmentAdapter;
 
         public PlaceholderFragment() {
         }
@@ -71,13 +77,53 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+            tvUserName = (TextView) view.findViewById(R.id.tvUserName);
             rvAppointment = (RecyclerView) view.findViewById(R.id.rvAppointment);
-            appointments = new ArrayList<Appointment>();
-            appointmentAdapter = new AppointmentAdapter(getActivity(), appointments);
+            appointmentAdapter = new AppointmentCursorAdapter(getActivity(), null);
+            //Show UserName
+            App app = (App) getActivity().getApplication();
+            tvUserName.setText(app.getUserName());
+            //Config RecyclerView
             rvAppointment.setAdapter(appointmentAdapter);
             rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
             rvAppointment.setItemAnimator(new DefaultItemAnimator());
+            // Initializes the loader
+            getLoaderManager().initLoader(0, null, this);
         }
 
+        @Override
+        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+            AppointmentDbHelper dbHelper = new AppointmentDbHelper(getActivity());
+            final SQLiteDatabase database = dbHelper.getReadableDatabase();
+            final Loader<Cursor> cursorLoader = new CursorLoader(getActivity(), null,
+                    AppointmentContract.AppointmentEntry.PROJECTION_ALL_COLUMNS,
+                    null,   //selection
+                    null,   //args
+                    null){  //sort
+                @Override
+                public Cursor loadInBackground() {
+                    Cursor cursor = database.query(
+                            AppointmentContract.AppointmentEntry.TABLE_NAME,
+                            getProjection(),
+                            getSelection(),
+                            getSelectionArgs(),
+                            null,   //group
+                            null,   //having
+                            getSortOrder());
+                    return cursor;
+                }
+            };
+            return cursorLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+            appointmentAdapter.swapCursor(cursor);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> cursorLoader) {
+            appointmentAdapter.swapCursor(null);
+        }
     }
 }

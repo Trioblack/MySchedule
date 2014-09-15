@@ -115,6 +115,8 @@ public class LoginActivity extends ActionBarActivity {
             }
             sharedPrefs.edit().putString(SP_LAST_USER, userName).apply();
             //start home
+            App app = (App) getActivity().getApplication();
+            app.setUserName(userName);
             Intent i = new Intent(getActivity(), HomeActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
