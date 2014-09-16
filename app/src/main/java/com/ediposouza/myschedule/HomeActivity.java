@@ -23,16 +23,22 @@ import android.widget.TextView;
 import com.ediposouza.myschedule.adapters.AppointmentCursorAdapter;
 import com.ediposouza.myschedule.db.AppointmentContract;
 import com.ediposouza.myschedule.db.AppointmentDbHelper;
+import com.melnykov.fab.FloatingActionButton;
 
 public class HomeActivity extends Activity {
+
+    private PlaceholderFragment homeFragment;
+
+    public enum sort {BY_NAME, BY_DATE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if (savedInstanceState == null) {
+            homeFragment = new PlaceholderFragment();
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, homeFragment)
                     .commit();
         }
     }
@@ -50,9 +56,12 @@ public class HomeActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_add) {
-            Intent intent = new Intent(this, NewAppointmentActivity.class);
-            startActivity(intent);
+        if (id == R.id.action_sort_name) {
+            homeFragment.reloadList(sort.BY_NAME);
+            return true;
+        }
+        if (id == R.id.action_sort_date) {
+            homeFragment.reloadList(sort.BY_DATE);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -61,12 +70,15 @@ public class HomeActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+    public static class PlaceholderFragment extends Fragment
+            implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
         private TextView tvUserName;
         private RecyclerView rvAppointment;
+        private FloatingActionButton fabAdd;
 
         private AppointmentCursorAdapter appointmentAdapter;
+        private String sortOrder = AppointmentContract.AppointmentEntry.COLUMN_DATE + " DESC";
 
         public PlaceholderFragment() {
         }
@@ -82,6 +94,8 @@ public class HomeActivity extends Activity {
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             tvUserName = (TextView) view.findViewById(R.id.tvUserName);
             rvAppointment = (RecyclerView) view.findViewById(R.id.rvAppointment);
+            fabAdd = (FloatingActionButton) view.findViewById(R.id.fabAdd);
+            fabAdd.setOnClickListener(this);
             appointmentAdapter = new AppointmentCursorAdapter(getActivity(), null);
             //Show UserName
             App app = (App) getActivity().getApplication();
@@ -96,6 +110,14 @@ public class HomeActivity extends Activity {
 
         @Override
         public void onResume() {
+            reloadList(sort.BY_NAME);
+        }
+
+        public void reloadList(sort by) {
+            if (by == sort.BY_NAME)
+                sortOrder = AppointmentContract.AppointmentEntry.COLUMN_TITLE + " ASC";
+            else
+                sortOrder = AppointmentContract.AppointmentEntry.COLUMN_DATE + " DESC";
             getLoaderManager().restartLoader(0, null, this);
         }
 
@@ -107,7 +129,7 @@ public class HomeActivity extends Activity {
                     AppointmentContract.AppointmentEntry.PROJECTION_ALL_COLUMNS,
                     null,   //selection
                     null,   //args
-                    null){  //sort
+                    sortOrder){  //sort
                 @Override
                 public Cursor loadInBackground() {
                     Cursor cursor = database.query(
@@ -132,6 +154,12 @@ public class HomeActivity extends Activity {
         @Override
         public void onLoaderReset(Loader<Cursor> cursorLoader) {
             appointmentAdapter.swapCursor(null);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), NewAppointmentActivity.class);
+            startActivity(intent);
         }
     }
 }

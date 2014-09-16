@@ -5,6 +5,16 @@
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <permission
+        android:name="com.ediposouza.myschedule.permission.READ_APPOINTMENTS"
+        android:protectionLevel="normal"
+        android:description="@string/permission_read_appointment"/>
+
+    <permission
+        android:name="com.ediposouza.myschedule.permission.WRITE_APPOINTMENTS"
+        android:protectionLevel="normal"
+        android:description="@string/permission_white_appointment"/>
+
     <uses-sdk
         tools:node="replace" />
 
@@ -32,6 +42,15 @@
             android:name=".NewAppointmentActivity"
             android:label="@string/title_activity_new_appointment" >
         </activity>
+
+        <provider
+            android:authorities="com.ediposouza.myschedule.appointmentProvider"
+            android:name=".provider.AppointmentProvider"
+            android:exported="true"
+            android:description="@string/appointment_provider_description"
+            android:readPermission="com.ediposouza.myschedule.permission.READ_APPOINTMENTS"
+            android:writePermission="com.ediposouza.myschedule.permission.WRITE_APPOINTMENTS"/>
+
     </application>
 
 </manifest>

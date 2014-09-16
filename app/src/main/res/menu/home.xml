@@ -3,10 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ediposouza.schedule.HomeActivity" >
 
-    <item android:id="@+id/action_add"
-        android:title="@string/action_add_appointment"
-        android:icon="@android:drawable/ic_menu_add"
+    <item android:id="@+id/action_sort_name"
+        android:title="@string/action_sortby_name"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        android:showAsAction="collapseActionView" />
+
+    <item android:id="@+id/action_sort_date"
+        android:title="@string/action_sortby_date"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:orderInCategory="100"
+        android:showAsAction="collapseActionView" />
 
 </menu>
