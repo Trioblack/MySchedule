@@ -1,15 +1,15 @@
-package com.ediposouza.schedule;
+package com.ediposouza.myschedule;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,18 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ediposouza.schedule.adapters.AppointmentCursorAdapter;
-import com.ediposouza.schedule.db.AppointmentContract;
-import com.ediposouza.schedule.db.AppointmentDbHelper;
+import com.ediposouza.myschedule.adapters.AppointmentCursorAdapter;
+import com.ediposouza.myschedule.db.AppointmentContract;
+import com.ediposouza.myschedule.db.AppointmentDbHelper;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
@@ -88,8 +88,8 @@ public class HomeActivity extends ActionBarActivity {
             tvUserName.setText(app.getUserName());
             //Config RecyclerView
             rvAppointment.setAdapter(appointmentAdapter);
-            rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
             rvAppointment.setItemAnimator(new DefaultItemAnimator());
+            rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
             // Initializes the loader
             getLoaderManager().initLoader(0, null, this);
         }

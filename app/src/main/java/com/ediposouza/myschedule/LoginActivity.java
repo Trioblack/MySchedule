@@ -1,11 +1,12 @@
-package com.ediposouza.schedule;
+package com.ediposouza.myschedule;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends Activity {
 
     private static final String SP_NAME = "lg";
     private static final String SP_LAST_USER = "lastUser";
@@ -33,7 +34,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         sharedPrefs = getSharedPreferences(SP_NAME, MODE_PRIVATE);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
@@ -44,7 +45,10 @@ public class LoginActivity extends ActionBarActivity {
     */
     private void swapFragments(){
         Fragment fragment = (registering) ? new PlaceholderFragment() : new NewUserFragment();
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
                 .replace(R.id.container, fragment)
                 .commit();
         registering = !registering;
@@ -105,12 +109,22 @@ public class LoginActivity extends ActionBarActivity {
 
         private void onLoginClick() {
             String userName = etUser.getText().toString().trim();
+            if(TextUtils.isEmpty(userName)){
+                etUser.setError(getString(R.string.login_error_empty));
+                etUser.requestFocus();
+                return;
+            }
             String pass = etPass.getText().toString().trim();
+            if(TextUtils.isEmpty(pass)){
+                etPass.setError(getString(R.string.login_error_empty));
+                etPass.requestFocus();
+                return;
+            }
             int spUserHash = sharedPrefs.getInt(userName, 0);
             int userHash = userName.concat(pass).hashCode();
             if(spUserHash != userHash){
                 etPass.setError(getString(R.string.login_error_user_pass));
-                Toast.makeText(getActivity(), getString(R.string.login_error_user_pass), Toast.LENGTH_SHORT).show();
+                etPass.requestFocus();
                 return;
             }
             sharedPrefs.edit().putString(SP_LAST_USER, userName).apply();

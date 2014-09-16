@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ediposouza.schedule" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ediposouza.myschedule" >
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <uses-sdk
+        tools:node="replace" />
+
     <application
-        android:name="com.ediposouza.schedule.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.ediposouza.schedule.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -21,11 +25,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ediposouza.schedule.HomeActivity"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="com.ediposouza.schedule.NewAppointmentActivity"
+            android:name=".NewAppointmentActivity"
             android:label="@string/title_activity_new_appointment" >
         </activity>
     </application>

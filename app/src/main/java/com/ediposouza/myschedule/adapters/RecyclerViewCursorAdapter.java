@@ -1,4 +1,4 @@
-package com.ediposouza.schedule.adapters;
+package com.ediposouza.myschedule.adapters;
 
 /**
  * Created by ufc134.souza on 15/09/2014.
@@ -62,7 +62,7 @@ public abstract class RecyclerViewCursorAdapter<T extends RecyclerView.ViewHolde
         if (!mCursor.moveToPosition(position)) {
             throw new IllegalStateException("couldn't move cursor to position " + position);
         }
-        return newView(mContext, mCursor);
+        return newView(mContext, viewGroup, mCursor);
     }
 
     @Override
@@ -136,7 +136,7 @@ public abstract class RecyclerViewCursorAdapter<T extends RecyclerView.ViewHolde
         }
     }
 
-    public abstract T newView(Context context, Cursor cursor);
+    public abstract T newView(Context context, ViewGroup viewGroup, Cursor cursor);
 
     public abstract void bindView(T viewHolder, Context context, Cursor cursor);
 

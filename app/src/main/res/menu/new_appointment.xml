@@ -7,7 +7,6 @@
         android:title="@string/action_save_appointment"
         android:orderInCategory="100"
         android:icon="@android:drawable/ic_menu_save"
-        app:showAsAction="always"
-        tools:showAsAction="always" />
+        android:showAsAction="always"/>
 
 </menu>

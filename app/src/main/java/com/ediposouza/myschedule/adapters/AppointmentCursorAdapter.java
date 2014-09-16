@@ -1,4 +1,4 @@
-package com.ediposouza.schedule.adapters;
+package com.ediposouza.myschedule.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,11 +7,12 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.ediposouza.schedule.R;
-import com.ediposouza.schedule.db.AppointmentContract;
-import com.ediposouza.schedule.models.Appointment;
-import com.ediposouza.schedule.models.AppointmentViewHolder;
+import com.ediposouza.myschedule.R;
+import com.ediposouza.myschedule.db.AppointmentContract;
+import com.ediposouza.myschedule.models.Appointment;
+import com.ediposouza.myschedule.models.AppointmentViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
@@ -28,9 +29,9 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
     }
 
     @Override
-    public AppointmentViewHolder newView(Context context, Cursor cursor) {
+    public AppointmentViewHolder newView(Context context, ViewGroup parent, Cursor cursor) {
         View v = LayoutInflater.from(context)
-                .inflate(R.layout.item_appointment, null, false);
+                .inflate(R.layout.item_appointment, parent, false);
         AppointmentViewHolder viewHolder = new AppointmentViewHolder(context, v);
         return viewHolder;
     }
@@ -58,6 +59,7 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
             c.moveToFirst();
             Uri contactPhotoUri = Uri.parse(c.getString(0));
             Picasso.with(context).load(contactPhotoUri).into(viewHolder.ivContact);
+            viewHolder.ivContact.setTag(appointment.getContactUri().toString());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.ediposouza.schedule;
+package com.ediposouza.myschedule;
 
 import android.app.Application;
 

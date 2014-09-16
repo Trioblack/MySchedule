@@ -1,4 +1,4 @@
-package com.ediposouza.schedule.models;
+package com.ediposouza.myschedule.models;
 
 import android.net.Uri;
 

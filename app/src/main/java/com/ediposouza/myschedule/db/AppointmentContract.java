@@ -1,4 +1,4 @@
-package com.ediposouza.schedule.db;
+package com.ediposouza.myschedule.db;
 
 import android.provider.BaseColumns;
 

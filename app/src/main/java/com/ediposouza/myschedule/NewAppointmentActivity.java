@@ -1,5 +1,6 @@
-package com.ediposouza.schedule;
+package com.ediposouza.myschedule;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -9,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,15 +19,15 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ediposouza.schedule.db.AppointmentContract;
-import com.ediposouza.schedule.db.AppointmentDbHelper;
+import com.ediposouza.myschedule.db.AppointmentContract;
+import com.ediposouza.myschedule.db.AppointmentDbHelper;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class NewAppointmentActivity extends ActionBarActivity {
+public class NewAppointmentActivity extends Activity {
 
     private static final int PICK_CONTACT_CODE = 1;
 
@@ -145,7 +145,6 @@ public class NewAppointmentActivity extends ActionBarActivity {
         String msg = (id == -1) ? getString(R.string.new_appointment_save_error)
                 : getString(R.string.new_appointment_save_success);
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        finish();
     }
 
     public String getFormattedDate() {
@@ -169,6 +168,9 @@ public class NewAppointmentActivity extends ActionBarActivity {
     }
 
     public String getContactUri() {
-        return (String) ivWith.getTag();
+        String uri = (String) ivWith.getTag();
+        if(uri == null)
+            uri = "";
+        return uri;
     }
 }
