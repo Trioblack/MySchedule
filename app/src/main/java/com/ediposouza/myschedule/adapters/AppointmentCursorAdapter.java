@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.ediposouza.myschedule.R;
 import com.ediposouza.myschedule.db.AppointmentContract;
-import com.ediposouza.myschedule.models.Appointment;
-import com.ediposouza.myschedule.models.AppointmentViewHolder;
+import com.ediposouza.myschedule.model.Appointment;
+import com.ediposouza.myschedule.model.AppointmentViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -59,7 +59,10 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
                 null);
         if(c != null) {
             c.moveToFirst();
-            Uri contactPhotoUri = Uri.parse(c.getString(0));
+            String uriString = c.getString(0);
+            if(uriString == null)
+                uriString = "";
+            Uri contactPhotoUri = Uri.parse(uriString);
             Picasso.with(context).load(contactPhotoUri).into(viewHolder.ivContact);
             viewHolder.ivContact.setTag(appointment.getContactUri().toString());
         }

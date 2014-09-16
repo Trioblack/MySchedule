@@ -1,4 +1,4 @@
-package com.ediposouza.myschedule.models;
+package com.ediposouza.myschedule.model;
 
 import android.net.Uri;
 import android.util.Log;
@@ -77,6 +77,8 @@ public class Appointment implements Serializable{
     }
 
     public Uri getContactUri() {
+        if(contactUri == null)
+            contactUri = "";
         return Uri.parse(contactUri);
     }
 

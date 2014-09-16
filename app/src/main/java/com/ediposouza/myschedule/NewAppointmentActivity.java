@@ -21,7 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ediposouza.myschedule.db.AppointmentContract;
-import com.ediposouza.myschedule.models.Appointment;
+import com.ediposouza.myschedule.model.Appointment;
 import com.ediposouza.myschedule.provider.AppointmentProvider;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -186,7 +186,10 @@ public class NewAppointmentActivity extends Activity {
                 null);
         if(c != null) {
             c.moveToFirst();
-            Uri contactPhotoUri = Uri.parse(c.getString(0));
+            String uriString = c.getString(0);
+            if(uriString == null)
+                uriString = "";
+            Uri contactPhotoUri = Uri.parse(uriString);
             Picasso.with(this).load(contactPhotoUri).into(ivWith);
         }
     }
@@ -200,10 +203,8 @@ public class NewAppointmentActivity extends Activity {
         values.put(AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI, getContactUri());
         if(editingID > 0) {
             Uri editingUri = ContentUris.withAppendedId(AppointmentProvider.CONTENT_URI, editingID);
-            int resUri = getContentResolver().update(editingUri, values, null, null);
-            String msg = (resUri > 0) ? getString(R.string.new_appointment_save_error)
-                    : getString(R.string.new_appointment_save_success);
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            getContentResolver().update(editingUri, values, null, null);
+            Toast.makeText(this, getString(R.string.new_appointment_save_success), Toast.LENGTH_SHORT).show();
         }
         else {
             Uri resUri = getContentResolver().insert(AppointmentProvider.CONTENT_URI, values);
@@ -211,26 +212,23 @@ public class NewAppointmentActivity extends Activity {
                     : getString(R.string.new_appointment_save_success);
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
-//        AppointmentDbHelper dbHelper = new AppointmentDbHelper(this);
-//        SQLiteDatabase wDatabase = dbHelper.getWritableDatabase();
-//        long id = wDatabase.insert(AppointmentContract.AppointmentEntry.TABLE_NAME, null, values);
     }
 
     public String getFormattedDate() {
         Calendar c = Calendar.getInstance();
         int month = Calendar.JANUARY;
         switch (dpDate.getMonth()){
-            case 1: month = Calendar.FEBRUARY;
-            case 2: month = Calendar.MARCH;
-            case 3: month = Calendar.APRIL;
-            case 4: month = Calendar.MAY;
-            case 5: month = Calendar.JUNE;
-            case 6: month = Calendar.JULY;
-            case 7: month = Calendar.AUGUST;
-            case 8: month = Calendar.SEPTEMBER;
-            case 9: month = Calendar.OCTOBER;
-            case 10: month = Calendar.NOVEMBER;
-            case 11: month = Calendar.DECEMBER;
+            case 1: month = Calendar.FEBRUARY; break;
+            case 2: month = Calendar.MARCH; break;
+            case 3: month = Calendar.APRIL; break;
+            case 4: month = Calendar.MAY; break;
+            case 5: month = Calendar.JUNE; break;
+            case 6: month = Calendar.JULY; break;
+            case 7: month = Calendar.AUGUST; break;
+            case 8: month = Calendar.SEPTEMBER; break;
+            case 9: month = Calendar.OCTOBER; break;
+            case 10: month = Calendar.NOVEMBER; break;
+            case 11: month = Calendar.DECEMBER; break;
         }
         c.set(dpDate.getYear(), month, dpDate.getDayOfMonth());
         return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
@@ -238,8 +236,10 @@ public class NewAppointmentActivity extends Activity {
 
     public String getContactUri() {
         String uri = (String) ivWith.getTag();
-        if(uri == null)
+        if(uri == null) {
             uri = "";
+            ivWith.setTag("");
+        }
         return uri;
     }
 }

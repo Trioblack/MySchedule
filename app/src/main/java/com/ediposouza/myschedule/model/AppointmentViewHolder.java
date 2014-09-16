@@ -1,4 +1,4 @@
-package com.ediposouza.myschedule.models;
+package com.ediposouza.myschedule.model;
 
 import android.app.AlertDialog;
 import android.content.ContentUris;

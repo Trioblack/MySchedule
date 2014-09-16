@@ -3,13 +3,17 @@ package com.ediposouza.myschedule;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,13 +29,13 @@ import android.widget.Toast;
 import com.ediposouza.myschedule.adapters.AppointmentCursorAdapter;
 import com.ediposouza.myschedule.db.AppointmentContract;
 import com.ediposouza.myschedule.db.AppointmentDbHelper;
+import com.ediposouza.myschedule.service.NotificationService;
 import com.melnykov.fab.FloatingActionButton;
 
 public class HomeActivity extends Activity {
 
     private static PlaceholderFragment homeFragment;
-    private Boolean exit = false;
-
+    private Boolean exitApp = false;
     public enum sort {BY_NAME, BY_DATE};
 
     public static void reloadList() {
@@ -59,7 +63,7 @@ public class HomeActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (exit){
+        if (exitApp){
             //reset login
             HomeActivity homeActivity = HomeActivity.this;
             if(homeActivity != null)
@@ -69,11 +73,11 @@ public class HomeActivity extends Activity {
         }else {
             String exitConfirmationMsg = getString(R.string.home_exit_confirmation);
             Toast.makeText(this, exitConfirmationMsg, Toast.LENGTH_SHORT).show();
-            exit = true;
+            exitApp = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    exit = false;
+                    exitApp = false;
                 }
             }, 3000);
         }
@@ -113,8 +117,27 @@ public class HomeActivity extends Activity {
         private RecyclerView rvAppointment;
         private FloatingActionButton fabAdd;
 
+        private boolean notificationServiceBound = false;
+        private NotificationService notificationService;
         private AppointmentCursorAdapter appointmentAdapter;
         private String sortOrder = AppointmentContract.AppointmentEntry.COLUMN_DATE + " DESC";
+
+        /** Defines callbacks for service binding, passed to bindService() */
+        private ServiceConnection notificationServiceConnection = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                // We've bound to LocalService, cast the IBinder and get LocalService instance
+                NotificationService.LocalBinder binder = (NotificationService.LocalBinder) service;
+                notificationService = binder.getService();
+                notificationServiceBound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName arg0) {
+                notificationServiceBound = false;
+            }
+        };
 
         public PlaceholderFragment() {
         }
@@ -140,8 +163,26 @@ public class HomeActivity extends Activity {
             rvAppointment.setAdapter(appointmentAdapter);
             rvAppointment.setItemAnimator(new DefaultItemAnimator());
             rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
+            // Bind to LocalService
+            Intent intent = new Intent(getActivity(), NotificationService.class);
+            getActivity().bindService(intent, notificationServiceConnection, Context.BIND_AUTO_CREATE);
             // Initializes the loader
             getLoaderManager().initLoader(0, null, this);
+        }
+
+        @Override
+        public void onDestroyView() {
+            // Unbind from the service
+            if (notificationServiceBound) {
+                getActivity().unbindService(notificationServiceConnection);
+                notificationServiceBound = false;
+            }
+            super.onDestroyView();
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
         }
 
         @Override
@@ -186,6 +227,8 @@ public class HomeActivity extends Activity {
         @Override
         public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
             appointmentAdapter.swapCursor(cursor);
+            if(notificationService != null)
+                notificationService.updateAppointmentsNotification();
         }
 
         @Override

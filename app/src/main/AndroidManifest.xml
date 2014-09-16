@@ -77,6 +77,10 @@
             android:readPermission="com.ediposouza.myschedule.permission.READ_APPOINTMENTS"
             android:writePermission="com.ediposouza.myschedule.permission.WRITE_APPOINTMENTS"/>
 
+        <receiver android:name=".service.NotificationBroadcast"/>
+
+        <service android:name=".service.NotificationService"/>
+
     </application>
 
 </manifest>
