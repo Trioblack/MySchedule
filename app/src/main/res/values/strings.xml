@@ -3,9 +3,14 @@
 
     <string name="app_name">My Schedule</string>
     <string name="action_settings">Settings</string>
+    <string name="action_sortby_name">Ordenar por nome</string>
+    <string name="action_sortby_date">Ordenar por data</string>
+    <string name="action_save_appointment">Salvar</string>
     <string name="login_user">User: </string>
     <string name="login_pass">Password: </string>
     <string name="title_activity_login">My Schedule Login</string>
+    <string name="title_activity_home">Meus Compromissos</string>
+    <string name="title_activity_new_appointment">Novo Compromisso</string>
     <string name="hello_world">Hello world!</string>
     <string name="login_confirm_pass">Confirm Pass:</string>
     <string name="login_error_pass_match">Passwords don\'t match!</string>
@@ -13,20 +18,24 @@
     <string name="login_error_empty">Campo vazio!</string>
     <string name="login_reg_success">Registration Success!</string>
     <string name="login_error_writing">Error while writting new user.</string>
-    <string name="title_activity_home">Meus Compromissos</string>
     <string name="item_appointment_with">with:</string>
-    <string name="title_activity_new_appointment">Novo Compromisso</string>
-    <string name="action_sortby_name">Ordenar por nome</string>
-    <string name="action_sortby_date">Ordenar por data</string>
     <string name="new_appointment_name">Nome:</string>
     <string name="new_appointment_description">Descrição:</string>
     <string name="new_appointment_time">Horário:</string>
-    <string name="action_save_appointment">Salvar</string>
     <string name="new_appointment_save_success">Compromisso salvo com sucesso.</string>
     <string name="new_appointment_save_error">Erro ao salvar novo compromisso.</string>
+    <string name="new_appointment_read_error">Erro ao ler arquivo de compromisso.</string>
+    <string name="new_appointment_delete_success">Compromisso apagado com sucesso.</string>
+    <string name="new_appointment_delete_error">Erro ao apagar compromisso</string>
+    <string name="view_holder_success_export">Compromisso exportado com sucesso para a pasta My Schedule!</string>
     <string name="view_holder_error_no_contact">Sem contato associado.</string>
+    <string name="view_holder_error_export">Erro ao exportar Compromisso.</string>
+    <string name="view_holder_option_edit">Editar</string>
+    <string name="view_holder_option_delete">Excluir</string>
+    <string name="view_holder_option_export">Exportar</string>
     <string name="appointment_provider_description">Access to the appointment database.</string>
     <string name="permission_read_appointment">Allows read a appointment.</string>
     <string name="permission_white_appointment">Allows write a new appointment.</string>
+    <string name="home_exit_confirmation">Aperte novamente para sair</string>
 
 </resources>

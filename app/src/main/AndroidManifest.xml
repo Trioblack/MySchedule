@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ediposouza.myschedule" >
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-sdk
+        tools:node="replace" />
 
     <permission
         android:name="com.ediposouza.myschedule.permission.READ_APPOINTMENTS"
@@ -15,8 +16,10 @@
         android:protectionLevel="normal"
         android:description="@string/permission_white_appointment"/>
 
-    <uses-sdk
-        tools:node="replace" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.ediposouza.myschedule.permission.READ_APPOINTMENTS" />
+    <uses-permission android:name="com.ediposouza.myschedule.permission.WRITE_APPOINTMENTS" />
 
     <application
         android:name=".App"
@@ -41,6 +44,29 @@
         <activity
             android:name=".NewAppointmentActivity"
             android:label="@string/title_activity_new_appointment" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:mimeType="application/octet-stream"
+                    android:host="*"
+                    android:pathPattern=".*\\.apt"
+                    />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:mimeType="application/apt"
+                    android:host="*"
+                    android:pathPattern=".*\\.apt"
+                    />
+            </intent-filter>
+
         </activity>
 
         <provider

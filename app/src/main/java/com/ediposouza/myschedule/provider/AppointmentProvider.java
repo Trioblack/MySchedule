@@ -73,6 +73,13 @@ public class AppointmentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+            case APPOINTMENTS:
+                return CONTENT_TYPE;
+            case APPOINTMENT_ID:
+                return CONTENT_ITEM_TYPE;
+        }
         return null;
     }
 

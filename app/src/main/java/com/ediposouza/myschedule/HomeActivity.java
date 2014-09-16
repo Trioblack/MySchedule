@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ediposouza.myschedule.adapters.AppointmentCursorAdapter;
 import com.ediposouza.myschedule.db.AppointmentContract;
@@ -27,19 +29,53 @@ import com.melnykov.fab.FloatingActionButton;
 
 public class HomeActivity extends Activity {
 
-    private PlaceholderFragment homeFragment;
+    private static PlaceholderFragment homeFragment;
+    private Boolean exit = false;
 
     public enum sort {BY_NAME, BY_DATE};
+
+    public static void reloadList() {
+        homeFragment.reloadList(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //Check Login
+        App app = (App) getApplication();
+        if(app.getUserName() == null){
+            Intent i = new Intent(this, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+        }
         if (savedInstanceState == null) {
             homeFragment = new PlaceholderFragment();
             getFragmentManager().beginTransaction()
                     .add(R.id.container, homeFragment)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit){
+            //reset login
+            HomeActivity homeActivity = HomeActivity.this;
+            if(homeActivity != null)
+                homeActivity.finish();
+            App app = (App) getApplication();
+            app.setUserName(null);
+        }else {
+            String exitConfirmationMsg = getString(R.string.home_exit_confirmation);
+            Toast.makeText(this, exitConfirmationMsg, Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3000);
         }
     }
 
@@ -114,10 +150,11 @@ public class HomeActivity extends Activity {
         }
 
         public void reloadList(sort by) {
-            if (by == sort.BY_NAME)
-                sortOrder = AppointmentContract.AppointmentEntry.COLUMN_TITLE + " ASC";
-            else
-                sortOrder = AppointmentContract.AppointmentEntry.COLUMN_DATE + " DESC";
+            if(by != null)
+                if (by == sort.BY_DATE)
+                    sortOrder = AppointmentContract.AppointmentEntry.COLUMN_DATE + " DESC";
+                else
+                    sortOrder = AppointmentContract.AppointmentEntry.COLUMN_TITLE + " ASC";
             getLoaderManager().restartLoader(0, null, this);
         }
 
@@ -161,5 +198,6 @@ public class HomeActivity extends Activity {
             Intent intent = new Intent(getActivity(), NewAppointmentActivity.class);
             startActivity(intent);
         }
+
     }
 }
