@@ -8,6 +8,7 @@ A Schedule application with:
 * Appointments stored per user
 * Alarm Manager to schedule a notification
 * Home Activity protected by permission
+* Export/Import appointment to/from .apt file
 
 Android Features
 
