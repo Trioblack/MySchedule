@@ -22,20 +22,25 @@ public class LoginActivity extends Activity {
     private static final String SP_LAST_USER = "lastUser";
 
     //To inform which fragment is showing
-    private boolean registering;
+    private static boolean registering;
 
-    private SharedPreferences sharedPrefs;
+    private static LoginFragment loginFragment;
+    private static NewUserFragment newUserFragment;
+
+    public static LoginActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        sharedPrefs = getSharedPreferences(SP_NAME, MODE_PRIVATE);
         if (savedInstanceState == null) {
+            if(loginFragment == null)
+                loginFragment = new LoginFragment();
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, loginFragment)
                     .commit();
         }
     }
@@ -43,9 +48,11 @@ public class LoginActivity extends Activity {
     /*
     * Change between Login and New User Fragments
     */
-    private void swapFragments(){
-        Fragment fragment = (registering) ? new PlaceholderFragment() : new NewUserFragment();
-        getFragmentManager().beginTransaction()
+    private static void swapFragments(){
+        if(newUserFragment == null)
+            newUserFragment = new NewUserFragment();
+        Fragment fragment = (registering) ? loginFragment : newUserFragment;
+        instance.getFragmentManager().beginTransaction()
                 .setCustomAnimations(
                         R.animator.card_flip_right_in, R.animator.card_flip_right_out,
                         R.animator.card_flip_left_in, R.animator.card_flip_left_out)
@@ -57,18 +64,20 @@ public class LoginActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    class PlaceholderFragment extends Fragment {
+    public static class LoginFragment extends Fragment {
 
         private EditText etUser;
         private EditText etPass;
+        private SharedPreferences sharedPrefs;
 
-        public PlaceholderFragment() {
+        public LoginFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+            sharedPrefs = getActivity().getSharedPreferences(SP_NAME, MODE_PRIVATE);
             return rootView;
         }
 
@@ -140,11 +149,12 @@ public class LoginActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    class NewUserFragment extends Fragment {
+    public static class NewUserFragment extends Fragment {
 
         private EditText etUser;
         private EditText etPass;
         private EditText etPassConfirm;
+        private SharedPreferences sharedPrefs;
 
         public NewUserFragment() {
         }
@@ -153,6 +163,7 @@ public class LoginActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_new_user, container, false);
+            sharedPrefs = getActivity().getSharedPreferences(SP_NAME, MODE_PRIVATE);
             return rootView;
         }
 
@@ -183,6 +194,11 @@ public class LoginActivity extends Activity {
             String userName = etUser.getText().toString().trim();
             if(TextUtils.isEmpty(userName)){
                 etUser.setError(getString(R.string.login_error_empty));
+                etUser.requestFocus();
+                return;
+            }
+            if(sharedPrefs.contains(userName)){
+                etUser.setError(getString(R.string.login_error_user_exist));
                 etUser.requestFocus();
                 return;
             }

@@ -2,4 +2,5 @@
 <resources>
     <string name="dateFormat">dd/MM/yyyy</string>
     <string name="timeFormat">HH:mm</string>
+    <string name="ad_unit_id"></string>
 </resources>

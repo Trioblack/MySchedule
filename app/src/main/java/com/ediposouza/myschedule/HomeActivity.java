@@ -33,6 +33,8 @@ import com.ediposouza.myschedule.adapters.AppointmentCursorAdapter;
 import com.ediposouza.myschedule.db.AppointmentContract;
 import com.ediposouza.myschedule.db.AppointmentDbHelper;
 import com.ediposouza.myschedule.service.NotificationService;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.melnykov.fab.FloatingActionButton;
 
 public class HomeActivity extends Activity {
@@ -125,6 +127,7 @@ public class HomeActivity extends Activity {
         private TextView tvUserName;
         private RecyclerView rvAppointment;
         private FloatingActionButton fabAdd;
+        private AdView mAdView;
 
         private Handler handler;
         private boolean hideFab = true;
@@ -175,8 +178,12 @@ public class HomeActivity extends Activity {
             tvUserName = (TextView) view.findViewById(R.id.tvUserName);
             rvAppointment = (RecyclerView) view.findViewById(R.id.rvAppointment);
             fabAdd = (FloatingActionButton) view.findViewById(R.id.fabAdd);
-            fabAdd.setOnClickListener(this);
+            mAdView = (AdView) view.findViewById(R.id.adView);
             appointmentAdapter = new AppointmentCursorAdapter(getActivity(), null);
+            //Init Ads
+            mAdView.loadAd(new AdRequest.Builder().build());
+            //Config FAB
+            fabAdd.setOnClickListener(this);
             //Show UserName
             App app = (App) getActivity().getApplication();
             tvUserName.setText(app.getUserName());
