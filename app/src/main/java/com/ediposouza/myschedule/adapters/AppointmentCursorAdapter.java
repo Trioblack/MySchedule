@@ -47,7 +47,7 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
         viewHolder.tvTitle.setText(appointment.getTitle());
         viewHolder.tvDesc.setText(appointment.getDesc());
         viewHolder.tvDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(appointment.getDate()));
-        viewHolder.tvTime.setText(new SimpleDateFormat("hh:mm").format(appointment.getTime()));
+        viewHolder.tvTime.setText(new SimpleDateFormat("HH:mm").format(appointment.getTime()));
         //load default image
         Picasso.with(context).load(R.drawable.ic_contact_picture_holo_light).into(viewHolder.ivContact);
         //load contact image

@@ -86,7 +86,7 @@ public class NewAppointmentActivity extends Activity {
                                 Calendar c = Calendar.getInstance();
                                 c.set(2000, Calendar.JANUARY, 1, timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                                 Date date = new Date();
-                                etTime.setText(new SimpleDateFormat("hh:mm").format(c.getTime()));
+                                etTime.setText(new SimpleDateFormat("HH:mm").format(c.getTime()));
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,7 +133,7 @@ public class NewAppointmentActivity extends Activity {
     private void fillFields(Appointment appointment) {
         etName.setText(appointment.getTitle());
         etDesc.setText(appointment.getDesc());
-        etTime.setText(new SimpleDateFormat("hh:mm").format(appointment.getTime()));
+        etTime.setText(new SimpleDateFormat("HH:mm").format(appointment.getTime()));
         dpDate.getCalendarView().setDate(appointment.getDate().getTime());
         loadContactImage(appointment.getContactUri());
     }

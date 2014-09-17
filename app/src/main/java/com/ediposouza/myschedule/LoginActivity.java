@@ -180,16 +180,26 @@ public class LoginActivity extends Activity {
         }
 
         private void onRegisterClick() {
+            String userName = etUser.getText().toString().trim();
+            if(TextUtils.isEmpty(userName)){
+                etUser.setError(getString(R.string.login_error_empty));
+                etUser.requestFocus();
+                return;
+            }
             String pass = etPass.getText().toString().trim();
+            if(TextUtils.isEmpty(pass)){
+                etPass.setError(getString(R.string.login_error_empty));
+                etPass.requestFocus();
+                return;
+            }
             if(!pass.equals(etPassConfirm.getText().toString())) {
                 etPass.setError(getString(R.string.login_error_pass_match));
                 etPassConfirm.setError(getString(R.string.login_error_pass_match));
                 etPass.requestFocus();
                 return;
             }
-            String userKey = etUser.getText().toString().trim();
-            int userHash = userKey.concat(pass).hashCode();
-            if(sharedPrefs.edit().putInt(userKey, userHash).commit()) {
+            int userHash = userName.concat(pass).hashCode();
+            if(sharedPrefs.edit().putInt(userName, userHash).commit()) {
                 swapFragments();
                 Toast.makeText(getActivity(), getString(R.string.login_reg_success), Toast.LENGTH_SHORT).show();
             }else

@@ -108,7 +108,7 @@ public class Appointment implements Serializable{
 
     private static Time parseTime(String date) {
         try {
-            Date d = new SimpleDateFormat("hh:mm").parse(date);
+            Date d = new SimpleDateFormat("HH:mm").parse(date);
             return new Time(d.getTime());
         }catch (Exception e){
             Log.e(Appointment.class.getName(), e.getMessage());

@@ -54,6 +54,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 Notification notification = b.setContentTitle(appointment.getTitle())
                         .setContentText(appointment.getDesc())
                         .setContentIntent(getPendentIntent(appointment, context))
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setLargeIcon(getContactImage(appointment.getContactUri(), context))
                         .setStyle(bigTextStyle)
                         .setVibrate(new long[]{200, 800, 200, 800})

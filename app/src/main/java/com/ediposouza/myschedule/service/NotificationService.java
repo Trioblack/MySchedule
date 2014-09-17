@@ -45,7 +45,7 @@ public class NotificationService extends Service {
                 null);
         if(cursor != null){
             cursor.moveToFirst();
-            while(cursor.moveToNext()){
+            do{
                 Appointment appointment = Appointment.parseAppointmentData(
                         cursor.getInt(cursor.getColumnIndex(AppointmentContract.AppointmentEntry._ID)),
                         getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TITLE),
@@ -55,7 +55,7 @@ public class NotificationService extends Service {
                         getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI)
                 );
                 registerPendentNotification(appointment);
-            }
+            }while(cursor.moveToNext());
         }
     }
 
@@ -65,7 +65,8 @@ public class NotificationService extends Service {
         date.setMinutes(appointment.getTime().getMinutes());
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(date.getTime());
-        if(System.currentTimeMillis() > c.getTimeInMillis())
+        Date now = new Date();
+        if(now.getTime() > c.getTimeInMillis())
             return;
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

@@ -18,7 +18,7 @@
     <string name="login_error_empty">Campo vazio!</string>
     <string name="login_reg_success">Registration Success!</string>
     <string name="login_error_writing">Error while writting new user.</string>
-    <string name="item_appointment_with">with:</string>
+    <string name="item_appointment_with">com:</string>
     <string name="new_appointment_name">Nome:</string>
     <string name="new_appointment_description">Descrição:</string>
     <string name="new_appointment_time">Horário:</string>
