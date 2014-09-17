@@ -2,6 +2,7 @@ package com.ediposouza.myschedule;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -36,6 +37,7 @@ public class NewAppointmentActivity extends Activity {
 
     private static final int PICK_CONTACT_CODE = 1;
     public static final String EDIT_APPOINTMENT = "edit_appointment";
+    public static final String NOTIFICATION_ID = "notification_id";
 
     private int editingID;
     private EditText etName;
@@ -64,6 +66,12 @@ public class NewAppointmentActivity extends Activity {
             Appointment appointment = (Appointment) extras.getSerializable(EDIT_APPOINTMENT);
             editingID = appointment.getId();
             fillFields(appointment);
+        }
+        if(extras != null && extras.containsKey(NOTIFICATION_ID)) {
+            int notificationID = extras.getInt(NOTIFICATION_ID);
+            NotificationManager notificationMgr = (NotificationManager)
+                    getSystemService(NOTIFICATION_SERVICE);
+            notificationMgr.cancel(notificationID);
         }
     }
 

@@ -10,11 +10,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ediposouza.myschedule.HomeActivity;
 import com.ediposouza.myschedule.NewAppointmentActivity;
@@ -33,12 +33,18 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Alarm !", Toast.LENGTH_LONG).show();
+        // wake the device
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Schedule");
+        wl.acquire();
+        // show Notification
         if(intent.hasExtra(APPOINTMENT_TO_NOTIFY)){
             Appointment appointment = (Appointment) intent.getExtras().
                     getSerializable(APPOINTMENT_TO_NOTIFY);
             createPendentNotification(appointment, context);
         }
+        // Release the lock
+        wl.release();
     }
 
     private void createPendentNotification(final Appointment appointment, final Context context) {
@@ -69,6 +75,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
     private PendingIntent getPendentIntent(Appointment appointment, Context context) {
         Intent resultIntent = new Intent(context, NewAppointmentActivity.class);
+        resultIntent.putExtra(NewAppointmentActivity.NOTIFICATION_ID, appointment.getId());
         resultIntent.putExtra(NewAppointmentActivity.EDIT_APPOINTMENT, appointment);
         // This ensures that the back button follows the recommended convention for the back key.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

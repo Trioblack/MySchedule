@@ -76,7 +76,7 @@ public class NotificationService extends Service {
                 appointment.getId(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC, c.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     private String getCursorString(Cursor cursor, String columnName){

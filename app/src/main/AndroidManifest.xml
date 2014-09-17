@@ -16,8 +16,9 @@
         android:protectionLevel="normal"
         android:description="@string/permission_white_appointment"/>
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.ediposouza.myschedule.permission.READ_APPOINTMENTS" />
     <uses-permission android:name="com.ediposouza.myschedule.permission.WRITE_APPOINTMENTS" />
 
