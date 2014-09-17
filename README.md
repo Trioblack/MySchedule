@@ -1,7 +1,13 @@
 MySchedule
 ==========
 
-A Schedule application with user autentication with just hash saved and schedule notification.
+A Schedule application with:
+
+* User autentication
+* Store user autentication with just the hashcode
+* Appointments stored per user
+* Alarm Manager to schedule a notification
+* Home Activity protected by permission
 
 Android Features
 
@@ -17,6 +23,8 @@ Android Features
 * Service
 * Notification
 * Broadcast Receiver
+* Custom Permission
+* Wake Device
 
 Dependences
 
