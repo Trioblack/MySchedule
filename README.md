@@ -1,6 +1,8 @@
 MySchedule
 ==========
 
+A Schedule application with user autentication with just hash saved and schedule notification.
+
 Android Features
 
 * Fragment
