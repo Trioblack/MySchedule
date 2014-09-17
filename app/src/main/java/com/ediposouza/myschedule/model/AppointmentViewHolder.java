@@ -33,6 +33,7 @@ public class AppointmentViewHolder extends RecyclerView.ViewHolder implements Vi
     private Context context;
 
     public int ID;
+    public int userNameHash;
     public TextView tvTitle;
     public TextView tvDesc;
     public TextView tvDate;
@@ -86,7 +87,8 @@ public class AppointmentViewHolder extends RecyclerView.ViewHolder implements Vi
                                         tvDesc.getText().toString(),
                                         tvDate.getText().toString(),
                                         tvTime.getText().toString(),
-                                        (String) ivContact.getTag());
+                                        (String) ivContact.getTag(),
+                                        userNameHash);
                                 Intent intent = new Intent(context, NewAppointmentActivity.class);
                                 intent.putExtra(NewAppointmentActivity.EDIT_APPOINTMENT, appointment);
                                 context.startActivity(intent);
@@ -126,7 +128,8 @@ public class AppointmentViewHolder extends RecyclerView.ViewHolder implements Vi
                 tvDesc.getText().toString(),
                 tvDate.getText().toString(),
                 tvTime.getText().toString(),
-                (String) ivContact.getTag());
+                (String) ivContact.getTag(),
+                userNameHash);
         File myScheduleDir = new File(Environment.getExternalStorageDirectory(), "My Schedule");
         if(!myScheduleDir.exists())
             myScheduleDir.mkdir();

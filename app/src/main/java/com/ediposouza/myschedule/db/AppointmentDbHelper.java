@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class AppointmentDbHelper extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME = "Appointment.db";
-    private static int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 2;
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + AppointmentContract.AppointmentEntry.TABLE_NAME + " (" +
@@ -19,7 +19,8 @@ public class AppointmentDbHelper extends SQLiteOpenHelper {
             AppointmentContract.AppointmentEntry.COLUMN_DESC + " TEXT, " +
             AppointmentContract.AppointmentEntry.COLUMN_DATE + " TEXT, " +
             AppointmentContract.AppointmentEntry.COLUMN_TIME + " TEXT, " +
-            AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI + " TEXT" +
+            AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI + " TEXT, " +
+            AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH + " INTEGER" +
             " )";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -36,6 +37,7 @@ public class AppointmentDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
     }
 }

@@ -19,6 +19,7 @@ public final class AppointmentContract {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_TIME = "time";
         public static final String COLUMN_CONTACT_URI = "contact_uri";
+        public static final String COLUMN_USERNAME_HASH = "username_hash";
 
         public static final String[] PROJECTION_ALL_COLUMNS = {
                 BaseColumns._ID,
@@ -26,7 +27,8 @@ public final class AppointmentContract {
                 COLUMN_DESC,
                 COLUMN_DATE,
                 COLUMN_TIME,
-                COLUMN_CONTACT_URI
+                COLUMN_CONTACT_URI,
+                COLUMN_USERNAME_HASH
         };
 
     }

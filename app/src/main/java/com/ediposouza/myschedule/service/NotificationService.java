@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.ediposouza.myschedule.App;
 import com.ediposouza.myschedule.db.AppointmentContract;
 import com.ediposouza.myschedule.model.Appointment;
 import com.ediposouza.myschedule.provider.AppointmentProvider;
@@ -38,9 +39,16 @@ public class NotificationService extends Service {
      * update the pendentIntent notifications for new Appointments
      */
     public void updateAppointmentsNotification() {
+        App app = (App) getApplication();
+        //Check UserNane
+        if(app.getUserName() == null){
+            return;
+        }
+        String selection = AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH +
+                "=" + String.valueOf(app.getUserName().hashCode());
         Cursor cursor = getContentResolver().query(AppointmentProvider.CONTENT_URI,
                 AppointmentContract.AppointmentEntry.PROJECTION_ALL_COLUMNS,
-                null,
+                selection,
                 null,
                 null);
         if(cursor != null && cursor.getCount() > 0){
@@ -52,7 +60,8 @@ public class NotificationService extends Service {
                         getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DESC),
                         getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DATE),
                         getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TIME),
-                        getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI)
+                        getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI),
+                        cursor.getInt(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH))
                 );
                 registerPendentNotification(appointment);
             }while(cursor.moveToNext());

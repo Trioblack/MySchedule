@@ -49,9 +49,6 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        String homePermission = "com.ediposouza.myschedule.permission.HOME_ACTIVITY";
-        if(checkCallingOrSelfPermission(homePermission) != PackageManager.PERMISSION_GRANTED)
-            throw new SecurityException();
         //Check UserNane
         App app = (App) getApplication();
         if(app.getUserName() == null){
@@ -59,6 +56,10 @@ public class HomeActivity extends Activity {
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }
+        //check permission
+        String homePermission = "com.ediposouza.myschedule.permission.HOME_ACTIVITY";
+        if(checkCallingOrSelfPermission(homePermission) != PackageManager.PERMISSION_GRANTED)
+            throw new SecurityException();
         if (savedInstanceState == null) {
             homeFragment = new PlaceholderFragment();
             getFragmentManager().beginTransaction()
@@ -238,11 +239,18 @@ public class HomeActivity extends Activity {
 
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+            App app = (App) getActivity().getApplication();
+            //Check UserNane
+            if(app.getUserName() == null){
+                return null;
+            }
             AppointmentDbHelper dbHelper = new AppointmentDbHelper(getActivity());
             final SQLiteDatabase database = dbHelper.getReadableDatabase();
+            String selection = AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH +
+                    "=" + String.valueOf(app.getUserName().hashCode());
             final Loader<Cursor> cursorLoader = new CursorLoader(getActivity(), null,
                     AppointmentContract.AppointmentEntry.PROJECTION_ALL_COLUMNS,
-                    null,   //selection
+                    selection,   //selection
                     null,   //args
                     sortOrder){  //sort
                 @Override

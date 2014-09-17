@@ -207,12 +207,14 @@ public class NewAppointmentActivity extends Activity {
     }
 
     private void saveUpdateNewAppointment() {
+        App app = (App) getApplication();
         ContentValues values = new ContentValues();
         values.put(AppointmentContract.AppointmentEntry.COLUMN_TITLE, etName.getText().toString());
         values.put(AppointmentContract.AppointmentEntry.COLUMN_DESC, etDesc.getText().toString());
         values.put(AppointmentContract.AppointmentEntry.COLUMN_DATE, getFormattedDate());
         values.put(AppointmentContract.AppointmentEntry.COLUMN_TIME, etTime.getText().toString());
         values.put(AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI, getContactUri());
+        values.put(AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH, app.getUserName().hashCode());
         if(editingID > 0) {
             Uri editingUri = ContentUris.withAppendedId(AppointmentProvider.CONTENT_URI, editingID);
             getContentResolver().update(editingUri, values, null, null);

@@ -41,9 +41,11 @@ public class AppointmentCursorAdapter extends RecyclerViewCursorAdapter<Appointm
                 getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DESC),
                 getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_DATE),
                 getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_TIME),
-                getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI)
+                getCursorString(cursor, AppointmentContract.AppointmentEntry.COLUMN_CONTACT_URI),
+                cursor.getInt(cursor.getColumnIndex(AppointmentContract.AppointmentEntry.COLUMN_USERNAME_HASH))
         );
         viewHolder.ID = appointment.getId();
+        viewHolder.userNameHash = appointment.getUserNameHash();
         viewHolder.tvTitle.setText(appointment.getTitle());
         viewHolder.tvDesc.setText(appointment.getDesc());
         viewHolder.tvDate.setText(new SimpleDateFormat(

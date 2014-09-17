@@ -19,12 +19,13 @@ public class Appointment implements Serializable{
     private Date date;
     private Time time;
     private String contactUri;
+    private int userNameHash;
 
     public Appointment(){
         this.id = 0;
     }
 
-    public Appointment(int id, String title, String desc, Date date, Time time, Uri contactUri) {
+    public Appointment(int id, String title, String desc, Date date, Time time, Uri contactUri, int userNameHash) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -34,6 +35,7 @@ public class Appointment implements Serializable{
             this.contactUri = "";
         else
             this.contactUri = contactUri.toString();
+        this.userNameHash = userNameHash;
     }
 
     private void setId(int id) {
@@ -89,12 +91,20 @@ public class Appointment implements Serializable{
             this.contactUri = contactUri.toString();
     }
 
+    public int getUserNameHash() {
+        return userNameHash;
+    }
+
+    public void setUserNameHash(int userNameHash) {
+        this.userNameHash = userNameHash;
+    }
+
     public static Appointment parseAppointmentData(int id, String title, String desc,
-                                                   String date, String time, String contactUri) {
+                                                   String date, String time, String contactUri, int userNameHash) {
         if (contactUri == null)
             contactUri = "";
         return new Appointment(id, title, desc,
-                parseDate(date), parseTime(time), Uri.parse(contactUri));
+                parseDate(date), parseTime(time), Uri.parse(contactUri), userNameHash);
     }
 
     private static Date parseDate(String date) {
