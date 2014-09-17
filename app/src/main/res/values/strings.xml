@@ -34,6 +34,7 @@
     <string name="view_holder_option_delete">Excluir</string>
     <string name="view_holder_option_export">Exportar</string>
     <string name="appointment_provider_description">Access to the appointment database.</string>
+    <string name="permission_home_activity">Allows open home activity.</string>
     <string name="permission_read_appointment">Allows read a appointment.</string>
     <string name="permission_white_appointment">Allows write a new appointment.</string>
     <string name="home_exit_confirmation">Aperte novamente para sair</string>

@@ -43,7 +43,7 @@ public class NotificationService extends Service {
                 null,
                 null,
                 null);
-        if(cursor != null){
+        if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             do{
                 Appointment appointment = Appointment.parseAppointmentData(

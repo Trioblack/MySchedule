@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dateFormat">dd/MM/yyyy</string>
+    <string name="timeFormat">HH:mm</string>
+</resources>

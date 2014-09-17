@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -46,7 +48,6 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //Check Login
         App app = (App) getApplication();
         if(app.getUserName() == null){
             Intent i = new Intent(this, LoginActivity.class);
@@ -113,10 +114,14 @@ public class HomeActivity extends Activity {
     public static class PlaceholderFragment extends Fragment
             implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
+        private static final int hideFabDelay = 3000;
+
         private TextView tvUserName;
         private RecyclerView rvAppointment;
         private FloatingActionButton fabAdd;
 
+        private Handler handler;
+        private boolean hideFab = true;
         private boolean notificationServiceBound = false;
         private NotificationService notificationService;
         private AppointmentCursorAdapter appointmentAdapter;
@@ -139,7 +144,17 @@ public class HomeActivity extends Activity {
             }
         };
 
+        private Runnable hideFabRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if(hideFab)
+                    fabAdd.hide(true);
+                handler.postDelayed(this, hideFabDelay);
+            }
+        };
+
         public PlaceholderFragment() {
+            handler = new Handler(Looper.getMainLooper());
         }
 
         @Override
@@ -163,11 +178,28 @@ public class HomeActivity extends Activity {
             rvAppointment.setAdapter(appointmentAdapter);
             rvAppointment.setItemAnimator(new DefaultItemAnimator());
             rvAppointment.setLayoutManager(new LinearLayoutManager(getActivity()));
+            rvAppointment.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideFab = false;
+                    fabAdd.show(true);
+                    if(event.getAction() == MotionEvent.ACTION_UP){
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideFab = true;
+                            }
+                        }, hideFabDelay);
+                    }
+                    return false;
+                }
+            });
             // Bind to LocalService
             Intent intent = new Intent(getActivity(), NotificationService.class);
             getActivity().bindService(intent, notificationServiceConnection, Context.BIND_AUTO_CREATE);
             // Initializes the loader
             getLoaderManager().initLoader(0, null, this);
+            handler.postDelayed(hideFabRunnable, hideFabDelay);
         }
 
         @Override

@@ -77,7 +77,8 @@ public class NewAppointmentActivity extends Activity {
 
     private void configComponents() {
         Date now = new Date(System.currentTimeMillis());
-        etTime.setText(new SimpleDateFormat("hh:mm").format(now));
+        etTime.setText(new SimpleDateFormat(getResources().getString(R.string.timeFormat))
+                .format(now));
         etTime.setFocusable(false);
         etTime.setFocusableInTouchMode(false);
         etTime.setClickable(true);
@@ -94,7 +95,9 @@ public class NewAppointmentActivity extends Activity {
                                 Calendar c = Calendar.getInstance();
                                 c.set(2000, Calendar.JANUARY, 1, timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                                 Date date = new Date();
-                                etTime.setText(new SimpleDateFormat("HH:mm").format(c.getTime()));
+                                etTime.setText(new SimpleDateFormat(
+                                        getResources().getString(R.string.timeFormat))
+                                        .format(c.getTime()));
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -141,7 +144,8 @@ public class NewAppointmentActivity extends Activity {
     private void fillFields(Appointment appointment) {
         etName.setText(appointment.getTitle());
         etDesc.setText(appointment.getDesc());
-        etTime.setText(new SimpleDateFormat("HH:mm").format(appointment.getTime()));
+        etTime.setText(new SimpleDateFormat(getResources().getString(R.string.timeFormat))
+                .format(appointment.getTime()));
         dpDate.getCalendarView().setDate(appointment.getDate().getTime());
         loadContactImage(appointment.getContactUri());
     }
@@ -239,7 +243,8 @@ public class NewAppointmentActivity extends Activity {
             case 11: month = Calendar.DECEMBER; break;
         }
         c.set(dpDate.getYear(), month, dpDate.getDayOfMonth());
-        return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
+        return new SimpleDateFormat(getResources().getString(R.string.dateFormat))
+                .format(c.getTime());
     }
 
     public String getContactUri() {
