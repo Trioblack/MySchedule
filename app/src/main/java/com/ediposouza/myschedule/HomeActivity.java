@@ -9,6 +9,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -48,6 +49,10 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        String homePermission = "com.ediposouza.myschedule.permission.HOME_ACTIVITY";
+        if(checkCallingOrSelfPermission(homePermission) != PackageManager.PERMISSION_GRANTED)
+            throw new SecurityException();
+        //Check UserNane
         App app = (App) getApplication();
         if(app.getUserName() == null){
             Intent i = new Intent(this, LoginActivity.class);
