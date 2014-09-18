@@ -11,9 +11,9 @@ A Schedule application with:
 * Export/Import appointment to/from .apt file
 * Ads
 
-Installation & Info
-* GooglePlay: https://play.google.com/store/apps/details?id=com.ediposouza.myschedule
-* Blog: http://ediposouza.com/minha-agenda-no-google-play
+[![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.ediposouza.myschedule)
+
+Post on my Blog: http://ediposouza.com/minha-agenda-no-google-play
 
 Android Features
 
@@ -29,6 +29,7 @@ Android Features
 * Service
 * Notification
 * Broadcast Receiver
+* Handler
 * Custom Permission
 * Wake Device
 
