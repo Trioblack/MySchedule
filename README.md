@@ -12,8 +12,8 @@ A Schedule application with:
 * Ads
 
 Installation & Info
-* GooglePlay: ![alt tag](https://play.google.com/store/apps/details?id=com.ediposouza.myschedule)
-* Blog: ![alt tag](http://ediposouza.com/minha-agenda-no-google-play)
+* GooglePlay: https://play.google.com/store/apps/details?id=com.ediposouza.myschedule
+* Blog: http://ediposouza.com/minha-agenda-no-google-play
 
 Android Features
 
