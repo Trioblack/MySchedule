@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Minha Agenda</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_sortby_name">Ordenar por nome</string>
+    <string name="action_sortby_date">Ordenar por data</string>
+    <string name="action_save_appointment">Salvar</string>
+    <string name="login_user">Usuário:</string>
+    <string name="login_pass">Senha:</string>
+    <string name="title_activity_login">Minha Agenda - Login</string>
+    <string name="title_activity_home">Meus Compromissos</string>
+    <string name="title_activity_new_appointment">Novo Compromisso</string>
+    <string name="login_confirm_pass">Confirme senha:</string>
+    <string name="login_error_pass_match">Senha não confere!</string>
+    <string name="login_error_user_pass">Usuário ou senha incorreto.</string>
+    <string name="login_error_empty">Campo vazio!</string>
+    <string name="login_reg_success">Registrado com sucesso!</string>
+    <string name="login_error_writing">Erro ao salvar novo usuário.</string>
+    <string name="item_appointment_with">com:</string>
+    <string name="new_appointment_name">Nome:</string>
+    <string name="new_appointment_description">Descrição:</string>
+    <string name="new_appointment_time">Horário:</string>
+    <string name="new_appointment_save_success">Compromisso salvo com sucesso.</string>
+    <string name="new_appointment_save_error">Erro ao salvar novo compromisso.</string>
+    <string name="new_appointment_read_error">Erro ao ler arquivo de compromisso.</string>
+    <string name="new_appointment_delete_success">Compromisso apagado com sucesso.</string>
+    <string name="new_appointment_delete_error">Erro ao apagar compromisso</string>
+    <string name="view_holder_success_export">Compromisso exportado com sucesso para a pasta My Schedule!</string>
+    <string name="view_holder_error_no_contact">Sem contato associado.</string>
+    <string name="view_holder_error_export">Erro ao exportar Compromisso.</string>
+    <string name="view_holder_option_edit">Editar</string>
+    <string name="view_holder_option_delete">Excluir</string>
+    <string name="view_holder_option_export">Exportar</string>
+    <string name="home_exit_confirmation">Aperte novamente para sair</string>
+    <string name="login_error_user_exist">Usuário já registrado.</string>
+
+</resources>

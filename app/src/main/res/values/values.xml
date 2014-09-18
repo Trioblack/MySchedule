@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dateFormat">dd/MM/yyyy</string>
-    <string name="timeFormat">HH:mm</string>
-    <string name="ad_unit_id">ca-app-pub-7881623561544201/3708904371</string>
+    <string name="dateFormat" translatable="false">dd/MM/yyyy</string>
+    <string name="timeFormat" translatable="false">HH:mm</string>
+    <string name="ad_unit_id" translatable="false">ca-app-pub-7881623561544201/3708904371</string>
 </resources>
