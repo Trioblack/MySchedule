@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="home_nav_drawner_items">
+        <item>@string/home_nav_drawner_logout</item>
+        <item>@string/home_nav_drawner_config</item>
+    </array>
+</resources>

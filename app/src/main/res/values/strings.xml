@@ -38,5 +38,7 @@
     <string name="permission_white_appointment" translatable="false">Allows write a new appointment.</string>
     <string name="home_exit_confirmation">Press again to exit</string>
     <string name="login_error_user_exist">User already registred.</string>
+    <string name="home_nav_drawner_logout">Logout</string>
+    <string name="home_nav_drawner_config">Configurations</string>
 
 </resources>

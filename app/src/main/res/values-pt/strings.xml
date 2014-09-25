@@ -34,5 +34,6 @@
     <string name="view_holder_option_export">Exportar</string>
     <string name="home_exit_confirmation">Aperte novamente para sair</string>
     <string name="login_error_user_exist">Usuário já registrado.</string>
+    <string name="home_nav_drawner_config">Configurações</string>
 
 </resources>
