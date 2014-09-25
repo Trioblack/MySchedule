@@ -19,6 +19,7 @@ Android Features
 
 * Fragment
 * Transaction Animation
+* Navegation Drawer
 * Shared Preferences
 * SQLite Database
 * Content Provider
